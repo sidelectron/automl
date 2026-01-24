@@ -1,0 +1,92 @@
+[project]
+name = "automl-platform"
+version = "0.1.0"
+description = "Intent-driven, multi-agent AutoML platform with CPU-optimized LLM"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "AutoML Platform Team"}
+]
+keywords = ["automl", "machine-learning", "multi-agent", "llm", "intent-driven"]
+
+dependencies = [
+    # LLM
+    "ollama>=0.1.0",
+
+    # ML Core
+    "scikit-learn>=1.4.0",
+    "xgboost>=2.0.0",
+    "pandas>=2.1.0",
+    "numpy>=1.24.0",
+    "scipy>=1.11.0",
+
+    # Schema validation
+    "pydantic>=2.5.0",
+    "jsonschema>=4.20.0",
+
+    # UI
+    "streamlit>=1.30.0",
+    "plotly>=5.18.0",
+
+    # Utilities
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0.0",
+    "loguru>=0.7.0",
+
+    # Data handling
+    "pyarrow>=14.0.0",  # For parquet files
+    "openpyxl>=3.1.0",  # For Excel files
+
+    # Progress bars
+    "tqdm>=4.66.0",
+
+    # Testing
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "jupyter>=1.0.0",
+    "ipykernel>=6.27.0",
+    "black>=23.12.0",
+    "ruff>=0.1.9",
+    "mypy>=1.8.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "I", "N", "W"]
+ignore = ["E501"]  # Line too long (handled by black)
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --cov=src --cov-report=term-missing --cov-report=html"
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true

@@ -1,0 +1,63 @@
+{
+  "type": "array",
+  "description": "Array of preprocessing strategies",
+  "items": {
+    "type": "object",
+    "required": [
+      "name",
+      "preprocessing_steps",
+      "model_candidates"
+    ],
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Strategy name/identifier"
+      },
+      "preprocessing_steps": {
+        "type": "array",
+        "description": "Ordered list of preprocessing steps",
+        "items": {
+          "type": "object",
+          "required": ["step_type", "method"],
+          "properties": {
+            "step_type": {
+              "type": "string",
+              "enum": ["imputation", "scaling", "encoding", "feature_engineering", "handling_imbalance"]
+            },
+            "method": {
+              "type": "string",
+              "description": "Specific method (e.g., 'median', 'standard_scaler', 'one_hot')"
+            },
+            "parameters": {
+              "type": "object",
+              "description": "Method-specific parameters",
+              "additionalProperties": true
+            },
+            "columns": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Columns to apply this step to (empty = all applicable)"
+            }
+          }
+        }
+      },
+      "model_candidates": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["xgboost", "lightgbm", "random_forest", "logistic_regression", "svm"]
+        },
+        "description": "List of model types to try"
+      },
+      "rationale": {
+        "type": "string",
+        "description": "Explanation of why this strategy is suitable"
+      },
+      "expected_outcomes": {
+        "type": "object",
+        "description": "Expected results from this strategy",
+        "additionalProperties": true
+      }
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "description": "Data profile with statistics and intent-aware flags",
+  "required": [
+    "data_types",
+    "statistics",
+    "missing_values",
+    "intent_flags"
+  ],
+  "properties": {
+    "data_types": {
+      "type": "object",
+      "description": "Data types for each column",
+      "additionalProperties": {
+        "type": "string",
+        "enum": ["numeric", "categorical", "datetime", "text"]
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "description": "Statistical summary of the data",
+      "properties": {
+        "shape": {
+          "type": "array",
+          "items": {"type": "integer"},
+          "description": "Dataset shape [rows, columns]"
+        },
+        "numeric_summary": {
+          "type": "object",
+          "description": "Summary statistics for numeric columns",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "mean": {"type": "number"},
+              "median": {"type": "number"},
+              "std": {"type": "number"},
+              "min": {"type": "number"},
+              "max": {"type": "number"}
+            }
+          }
+        },
+        "categorical_summary": {
+          "type": "object",
+          "description": "Value counts for categorical columns",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {"type": "integer"}
+          }
+        }
+      }
+    },
+    "missing_values": {
+      "type": "object",
+      "description": "Missing value counts per column",
+      "additionalProperties": {"type": "integer"}
+    },
+    "class_distribution": {
+      "type": "object",
+      "description": "Class distribution for classification tasks",
+      "additionalProperties": {"type": "number"}
+    },
+    "intent_flags": {
+      "type": "array",
+      "description": "Intent-aware warnings and recommendations",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["warning", "info", "recommendation"]
+          },
+          "message": {"type": "string"},
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          }
+        }
+      }
+    },
+    "insights": {
+      "type": "array",
+      "description": "LLM-generated insights about the data",
+      "items": {"type": "string"}
+    }
+  }
+}

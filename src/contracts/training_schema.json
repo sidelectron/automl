@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "description": "Training results for a strategy-model-threshold combination",
+  "required": [
+    "strategy_name",
+    "model_name",
+    "threshold",
+    "metrics"
+  ],
+  "properties": {
+    "strategy_name": {
+      "type": "string",
+      "description": "Name of the preprocessing strategy used"
+    },
+    "model_name": {
+      "type": "string",
+      "description": "Name of the model (e.g., 'xgboost', 'lightgbm')"
+    },
+    "threshold": {
+      "type": "number",
+      "description": "Decision threshold used (0.0-1.0 for classification)"
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Standard ML metrics",
+      "properties": {
+        "accuracy": {"type": "number"},
+        "precision": {"type": "number"},
+        "recall": {"type": "number"},
+        "f1": {"type": "number"},
+        "confusion_matrix": {
+          "type": "object",
+          "properties": {
+            "true_positive": {"type": "integer"},
+            "true_negative": {"type": "integer"},
+            "false_positive": {"type": "integer"},
+            "false_negative": {"type": "integer"}
+          }
+        }
+      }
+    },
+    "business_metrics": {
+      "type": "object",
+      "description": "Business impact metrics",
+      "properties": {
+        "net_value": {
+          "type": "number",
+          "description": "Net business value: (TP × value) - (FP × cost)"
+        },
+        "roi": {
+          "type": "number",
+          "description": "Return on investment: net_value / total_cost"
+        },
+        "total_cost": {
+          "type": "number",
+          "description": "Total cost: (TP + FP) × cost_per_action"
+        },
+        "total_value": {
+          "type": "number",
+          "description": "Total value: TP × value_per_positive"
+        }
+      }
+    },
+    "model_path": {
+      "type": "string",
+      "description": "Path to saved model file"
+    },
+    "preprocessing_path": {
+      "type": "string",
+      "description": "Path to saved preprocessing pipeline"
+    }
+  }
+}

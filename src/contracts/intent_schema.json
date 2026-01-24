@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "description": "User intent with business context",
+  "required": [
+    "task_type",
+    "target_variable",
+    "business_context"
+  ],
+  "properties": {
+    "task_type": {
+      "type": "string",
+      "enum": ["binary_classification", "multiclass_classification", "regression"],
+      "description": "Type of machine learning task"
+    },
+    "target_variable": {
+      "type": "string",
+      "description": "Name of the target variable to predict"
+    },
+    "business_context": {
+      "type": "object",
+      "required": ["priority_metric"],
+      "properties": {
+        "priority_metric": {
+          "type": "string",
+          "enum": ["recall", "precision", "f1", "accuracy", "net_value", "roi"],
+          "description": "Primary metric to optimize for"
+        },
+        "true_positive_value": {
+          "type": "number",
+          "description": "Value of a true positive (e.g., saved customer worth $500)",
+          "default": 0
+        },
+        "false_positive_cost": {
+          "type": "number",
+          "description": "Cost of a false positive (e.g., retention call costs $20)",
+          "default": 0
+        },
+        "cost_ratio": {
+          "type": "number",
+          "description": "Ratio of false_positive_cost to true_positive_value",
+          "default": 0
+        },
+        "value_metrics": {
+          "type": "object",
+          "description": "Additional value metrics for business context",
+          "additionalProperties": true
+        }
+      }
+    },
+    "dataset_path": {
+      "type": "string",
+      "description": "Path to the dataset file"
+    },
+    "description": {
+      "type": "string",
+      "description": "Natural language description of the task"
+    }
+  }
+}

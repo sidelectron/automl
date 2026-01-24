@@ -1,0 +1,101 @@
+{
+  "type": "object",
+  "description": "Comparison results with winner and business explanation",
+  "required": [
+    "winner",
+    "business_impact",
+    "recommended_threshold"
+  ],
+  "properties": {
+    "winner": {
+      "type": "object",
+      "description": "Best performing strategy-model-threshold combination",
+      "required": ["strategy_name", "model_name", "threshold"],
+      "properties": {
+        "strategy_name": {"type": "string"},
+        "model_name": {"type": "string"},
+        "threshold": {"type": "number"},
+        "metrics": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "business_metrics": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "business_impact": {
+      "type": "object",
+      "description": "Business impact breakdown",
+      "properties": {
+        "true_positives": {
+          "type": "integer",
+          "description": "Number of true positives (e.g., churners caught)"
+        },
+        "false_positives": {
+          "type": "integer",
+          "description": "Number of false positives (e.g., unnecessary calls)"
+        },
+        "false_negatives": {
+          "type": "integer",
+          "description": "Number of false negatives (e.g., missed churners)"
+        },
+        "total_actions": {
+          "type": "integer",
+          "description": "Total actions taken (TP + FP)"
+        },
+        "explanation": {
+          "type": "string",
+          "description": "Natural language explanation of business impact"
+        }
+      }
+    },
+    "financial_impact": {
+      "type": "object",
+      "description": "Financial metrics",
+      "properties": {
+        "potential_value": {
+          "type": "number",
+          "description": "Potential value if all positives were true (TP × value)"
+        },
+        "total_cost": {
+          "type": "number",
+          "description": "Total cost of actions (TP + FP) × cost"
+        },
+        "net_value": {
+          "type": "number",
+          "description": "Net value: potential_value - total_cost"
+        },
+        "roi": {
+          "type": "number",
+          "description": "Return on investment ratio"
+        }
+      }
+    },
+    "recommended_threshold": {
+      "type": "number",
+      "description": "Optimal threshold for business goals"
+    },
+    "alternatives": {
+      "type": "array",
+      "description": "Top alternative options",
+      "items": {
+        "type": "object",
+        "properties": {
+          "strategy_name": {"type": "string"},
+          "model_name": {"type": "string"},
+          "threshold": {"type": "number"},
+          "business_metrics": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "comparison_text": {
+      "type": "string",
+      "description": "LLM-generated comparison explanation in business terms"
+    }
+  }
+}
