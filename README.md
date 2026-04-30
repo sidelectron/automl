@@ -1,6 +1,6 @@
 # Intent-Driven AutoML Platform
 
-**An AI-powered AutoML platform that explains every decision in business terms, making ML transparent and actionable.**
+**An AI-powered AutoML platform that explains every decision in business terms, making ML transparent and actionable**
 
 ---
 
